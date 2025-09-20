@@ -62,5 +62,40 @@ pie title Freelancers & SMBs Growth by 2030
 | Balance: $2,450 USDT   |   Escrow Held: $900     |
  --------------------------------------------------
 
+---
 
 ---
+
+## 🙌 Acknowledgements
+
+Special thanks to the open-source community, blockchain developers, and AI researchers whose tools and insights make **Finote** possible.  
+
+---
+
+## 📬 Contact
+
+- 🌐 Website: [finote.io](https://finote.io) *(placeholder)*  
+- 📧 Email: hello@finote.io  
+- 🐦 Twitter/X: [@FinoteApp](https://twitter.com) *(placeholder)*  
+- 💼 LinkedIn: [Finote](https://linkedin.com) *(placeholder)*  
+
+---
+
+## ⭐ Support Us
+
+If you find **Finote** useful, please consider:
+
+- Giving us a ⭐ on [GitHub](https://github.com)  
+- Sharing with your network to help freelancers & small businesses thrive 🌍  
+
+---
+
+## 📜 License
+
+MIT License © 2025 Finote  
+
+---
+
+<p align="center">
+  Made with ❤️ by the <b>Finote</b> team
+</p>
