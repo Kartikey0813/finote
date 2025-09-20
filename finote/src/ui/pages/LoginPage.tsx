@@ -19,7 +19,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg p-6">
       <div className="w-full max-w-md panel p-8">
-        <h2 className="text-2xl font-bold mb-2">Sign in to InvoicePro</h2>
+        <h2 className="text-2xl font-bold mb-2">Sign in to Finote</h2>
         <p className="text-slate-400 mb-6">Use any email to try the demo. This is a mock login for frontend preview.</p>
 
         <form onSubmit={submit} className="space-y-4">
