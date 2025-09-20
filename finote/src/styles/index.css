@@ -4,3 +4,85 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* Theme tokens (hard-coded) */
+:root {
+  /* Card background and muted text color */
+  --card-bg: #ffffff;
+  --muted: #6b7280; /* text-muted */
+  /* Accent used for focus ring */
+  --accent-rgb: 3,105,161; /* used in rgba(...) */
+}
+
+/* Basic card style (rounded, padding, white bg, border, shadow, hover lift) */
+.card {
+  border-radius: 1rem;              /* rounded-2xl */
+  padding: 1.5rem;                  /* p-6 */
+  background-color: var(--card-bg); /* bg-white */
+  border: 1px solid #f3f4f6;        /* border-gray-100 */
+  box-shadow: 0 6px 16px rgba(16,24,40,0.06); /* shadow-card-sm */
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  transform: translateZ(0);         /* enable GPU compositing for smoother anim */
+}
+
+/* Hover lift */
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);      /* hover:-translate-y-1 */
+  box-shadow: 0 10px 30px rgba(16,24,40,0.08); /* slightly larger shadow */
+}
+
+/* Button CTA (inline-flex, spacing, padding, rounded, subtle hover lift) */
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;                     /* gap-3 */
+  padding: 0.625rem 1.25rem;        /* px-5 py-3 */
+  border-radius: 0.375rem;          /* rounded-md */
+  font-weight: 600;                 /* font-semibold */
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover micro-lift for CTAs */
+.btn-cta:hover,
+.btn-cta:focus {
+  transform: translateY(-2px);     /* hover:-translate-y-0.5 */
+}
+
+/* Subtle focus style for any focusable element */
+:focus {
+  outline: none;
+  /* 4px focus ring using the accent color */
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.12);
+}
+
+/* Smooth scroll for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Small utility to mimic the tiny "kbd" look if you used it elsewhere */
+.kbd {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #f3f4f6;  /* light gray */
+  color: #374151;
+  font-size: 0.75rem;
+  border: 1px solid #e6e7ea;
+}
+
+/* If you need a subtle card header / small text styles used in cards */
+.card .muted {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+/* Example: small responsive tweak (optional) */
+@media (prefers-reduced-motion: reduce) {
+  .card, .btn-cta, :focus {
+    transition: none !important;
+  }
+}

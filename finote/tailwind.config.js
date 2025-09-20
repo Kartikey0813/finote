@@ -22,8 +22,24 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,html}'],
   theme: {
-    extend: {}
+    extend: {
+      colors: {
+        brand: {
+          50: '#f0f9ff',
+          100: '#e6f6ff',
+          400: '#06b6d4',
+          500: '#0891b2',
+          600: '#0369a1'
+        }
+      },
+      boxShadow: {
+        'card-lg': '0 10px 30px rgba(16,24,40,0.08)',
+        'card-sm': '0 6px 16px rgba(16,24,40,0.06)'
+      }
+    }
   },
   plugins: []
 };
+
+
     

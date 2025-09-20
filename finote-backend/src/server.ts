@@ -32,7 +32,13 @@ const db: any = {
     { id: 'N-1', title: 'Payment Received', text: 'Received payment of $500 from Tech Solutions Inc.', ts: '2 hours ago' },
     { id: 'N-2', title: 'Fraud Alert', text: 'A potential fraudulent transaction was detected. Please review.', ts: '4 hours ago' }
   ],
-  identity: { fullName: 'Sophia Carter', email: 'sophia.carter@email.com', phone: '+1 (555) 123-4567', kycStatus: 'Verified' },
+  identity: [
+    { fullName: 'Sophia Carter', email: 'sophia.carter@email.com', phone: '+1 (555) 123-4567', kycStatus: 'Verified' },
+  {
+    fullName: 'Udit Bhatt', email: 'udit.bhatt@email.com', phone: '+91 9876543210', kycStatus: 'Verified' 
+  },
+  {"fullName":"ABC Bhatt","email":"ABC@email.com","phone":"+91 9876543210","kycStatus":"NOT VERIFIED"}
+  ],
   disputes: [
     { id: '#12345', parties: 'Tech Solutions Inc. vs. Freelancer Alex', dateFiled: '2024-07-15', status: 'Negotiation' },
     { id: '#67890', parties: 'Design Studio vs. Client Sarah', dateFiled: '2024-07-20', status: 'Mediation' }
