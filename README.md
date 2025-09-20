@@ -43,21 +43,3 @@ graph TD
     F -->|Yes| G[Release Payment]
     F -->|No| H[Hold in Escrow]
     G --> I[Instant Cross-Border Stablecoin Payment]
-
-pie title Freelancers & SMBs Growth by 2030
-    "Freelancers (Global)" : 50
-    "Small Businesses" : 35
-    "Enterprise Tools" : 15
-
- --------------------------------------------------
-|  Finote Dashboard                                |
-|--------------------------------------------------|
-| Invoices | Payments | Clients | Fraud Alerts     |
-|--------------------------------------------------|
-| ✔ Invoice #12345   Status: In Escrow             |
-| ✔ Invoice #12346   Status: Paid                  |
-| ⚠ Invoice #12347   Fraud Alert: Suspicious Edit  |
-|--------------------------------------------------|
-| Balance: $2,450 USDT   |   Escrow Held: $900     |
- --------------------------------------------------
-
