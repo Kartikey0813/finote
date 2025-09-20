@@ -1,0 +1,394 @@
+openapi: 3.0.3
+info:
+  title: Finote API
+  version: 1.0.0
+  description: API for Finote (invoices, payments, fraud, identity, escrow). Mock server implements these endpoints.
+servers:
+  - url: http://localhost:4000
+paths:
+  /auth/wallet/login:
+    post:
+      summary: Wallet / mock login (frontend signature)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                address:
+                  type: string
+                signature:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /metrics:
+    get:
+      summary: Get dashboard metrics
+      responses:
+        '200':
+          description: Metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metrics'
+
+  /invoices:
+    get:
+      summary: List invoices
+      responses:
+        '200':
+          description: Invoice list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+    post:
+      summary: Create invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceCreate'
+      responses:
+        '201':
+          description: Invoice created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+
+  /invoices/{invoiceId}:
+    get:
+      summary: Get invoice
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+
+  /invoices/{invoiceId}/anchor:
+    post:
+      summary: Anchor invoice to blockchain (enqueue)
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Anchor queued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  txHash:
+                    type: string
+                    nullable: true
+
+  /escrows:
+    post:
+      summary: Create escrow for an invoice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                invoiceId:
+                  type: string
+                tokenAddress:
+                  type: string
+                amount:
+                  type: number
+      responses:
+        '201':
+          description: Escrow created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Escrow'
+
+  /escrows/{escrowId}/deposit:
+    post:
+      summary: Deposit to escrow (instructions)
+      parameters:
+        - name: escrowId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from:
+                  type: string
+                txHash:
+                  type: string
+      responses:
+        '200':
+          description: Deposit recorded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Escrow'
+
+  /payments:
+    get:
+      summary: List payments
+      responses:
+        '200':
+          description: Payments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+
+  /fraud-alerts:
+    get:
+      summary: List fraud alerts
+      responses:
+        '200':
+          description: Fraud alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FraudAlert'
+
+  /notifications:
+    get:
+      summary: List notifications
+      responses:
+        '200':
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Notification'
+
+  /identity:
+    get:
+      summary: Get identity / KYC status
+      responses:
+        '200':
+          description: Identity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Identity'
+
+  /disputes:
+    get:
+      summary: List disputes
+      responses:
+        '200':
+          description: Disputes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dispute'
+    post:
+      summary: Create dispute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDispute'
+      responses:
+        '201':
+          description: Dispute created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dispute'
+
+components:
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            avatar:
+              type: string
+    Metrics:
+      type: object
+      properties:
+        totalRevenue:
+          type: number
+        outstandingPayments:
+          type: number
+        avgInvoiceAmount:
+          type: number
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+        client:
+          type: string
+        date:
+          type: string
+        amount:
+          type: number
+        status:
+          type: string
+        verification:
+          type: string
+        cid:
+          type: string
+          nullable: true
+        anchorTx:
+          type: string
+          nullable: true
+    InvoiceCreate:
+      type: object
+      required:
+        - client
+        - items
+      properties:
+        client:
+          type: string
+        clientEmail:
+          type: string
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              qty:
+                type: number
+              rate:
+                type: number
+    Escrow:
+      type: object
+      properties:
+        id:
+          type: string
+        invoiceId:
+          type: string
+        contractAddress:
+          type: string
+        tokenAddress:
+          type: string
+        depositedAmount:
+          type: number
+        status:
+          type: string
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        invoiceId:
+          type: string
+        payer:
+          type: string
+        amount:
+          type: number
+        date:
+          type: string
+        status:
+          type: string
+        txHash:
+          type: string
+    FraudAlert:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        timestamp:
+          type: string
+        target:
+          type: string
+        severity:
+          type: string
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        text:
+          type: string
+        ts:
+          type: string
+    Identity:
+      type: object
+      properties:
+        fullName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        kycStatus:
+          type: string
+    Dispute:
+      type: object
+      properties:
+        id:
+          type: string
+        parties:
+          type: string
+        dateFiled:
+          type: string
+        status:
+          type: string
+    CreateDispute:
+      type: object
+      required:
+        - invoiceId
+        - reason
+      properties:
+        invoiceId:
+          type: string
+        reason:
+          type: string
